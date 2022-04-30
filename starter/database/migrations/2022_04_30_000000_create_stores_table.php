@@ -16,7 +16,6 @@ class CreateStoresTable extends Migration
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
             $table->foreignId('merchant_id')->references('id')->on('merchants');
-            $table->string('slug');
             $table->timestamps();
         });
     }
