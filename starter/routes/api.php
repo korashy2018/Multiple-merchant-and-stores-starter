@@ -30,6 +30,11 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('me', 'AuthController@me');
         });
         Route::group(['middleware' => 'auth:merchants'], function () {
+            Route::get('test', function () {
+                return response()->json([
+                    'message' => 'It worked '
+                ]);
+            });
         });
     });
     //customers routes

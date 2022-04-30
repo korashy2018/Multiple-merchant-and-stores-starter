@@ -18,7 +18,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:customers', ['except' => ['login', 'register']]
+        $this->middleware('auth:merchants', ['except' => ['login', 'register']]
         );
     }
 
@@ -31,8 +31,16 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (!$token = auth('customers')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if (!$token = auth('merchants')->attempt($credentials)) {
+            return response()->json([
+                "errors" => [
+                    [
+                        'status' => 401,
+                        'title'  => 'unauthenticated',
+                        'detail' => trans('app.unauthenticated')
+                    ]
+                ]
+            ], 401);
         }
 
         return $this->respondWithToken($token);
@@ -51,7 +59,7 @@ class AuthController extends Controller
         $validator = Validator::make($data, [
             'name'     => 'required|string',
             'email'    => 'required|email|unique:merchants',
-            'password' => 'required|confirmed|string|min:6|max:50'
+            'password' => 'required|string|min:6|max:50'
         ]);
 
         //Send failed response if request is not valid
@@ -82,7 +90,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth('customers')->user());
+        return response()->json(auth('merchants')->user());
     }
 
     /**
@@ -92,7 +100,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        auth('customers')->logout();
+        auth('merchants')->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
     }
@@ -104,7 +112,7 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth('customers')->refresh());
+        return $this->respondWithToken(auth('merchants')->refresh());
     }
 
     /**
@@ -117,9 +125,10 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         return response()->json([
+            'data'         => auth('merchants')->user(),
             'access_token' => $token,
             'token_type'   => 'bearer',
-            'expires_in'   => auth('customers')->factory()->getTTL() * 60
+            'expires_in'   => auth('merchants')->factory()->getTTL() * 60
         ]);
     }
 }
