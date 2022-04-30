@@ -23,5 +23,8 @@ class StoreSetting extends Model
             'shipping_cost'
         ];
 
-
+    public function store()
+    {
+        return $this->belongsTo(Store::class, 'store_id');
+    }
 }

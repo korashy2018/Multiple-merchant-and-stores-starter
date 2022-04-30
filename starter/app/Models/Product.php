@@ -28,5 +28,10 @@ class Product extends Model
             'description'
         ];
 
+    public function store()
+    {
+        return $this->belongsTo(Store::class, 'store_id');
+    }
+
 
 }
