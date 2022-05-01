@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Log;
 
 class OrdersController extends Controller
 {
+    private $customer;
+
+    public function __construct()
+    {
+        $this->customer = auth('customers')->user();
+    }
 
     public function store(OrderRequest $request)
     {
@@ -37,7 +43,8 @@ class OrdersController extends Controller
             $createdOrder = Order::create([
                 'total'               => $orderTotal,
                 'total_shipping_cost' => $totalShippingCost,
-                'grand_total'         => $orderTotal + $totalShippingCost
+                'grand_total'         => $orderTotal + $totalShippingCost,
+                'customer_id'         => $this->customer->id
             ]);
             foreach ($productIds as $id) {
                 $createdOrder->products()->attach($id);

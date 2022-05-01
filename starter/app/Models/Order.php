@@ -20,7 +20,8 @@ class Order extends Model
         = [
             'total',
             'total_shipping_cost',
-            'grand_total'
+            'grand_total',
+            'customer_id'
         ];
 
     /**
@@ -34,6 +35,11 @@ class Order extends Model
             'order_id',
             'product_id'
         )->withPivot(['quantity', 'price']);
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 
 }

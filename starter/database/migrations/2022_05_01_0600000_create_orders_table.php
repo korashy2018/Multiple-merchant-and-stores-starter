@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->float('total');
             $table->float('grand_total');
             $table->float('total_shipping_cost')->default(0);
+            $table->foreignId('customer_id')->references('id')->on('customers');
             $table->timestamps();
         });
     }
