@@ -35,6 +35,7 @@ Route::group(['prefix' => 'v1/{lang}'], function () {
         ], function () {
             Route::apiResource('stores', 'StoreController')->except('destroy');
             Route::get('{store}/products', 'ProductsController@index');
+            Route::get('products/{product}', 'ProductsController@show');
             Route::post('{store}/products', 'ProductsController@store');
         });
     });
