@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -57,10 +57,10 @@ class Merchant extends Authenticatable implements JWTSubject
     }
 
     /**
-     * @return HasOne
+     * @return HasMany
      */
-    public function store(): HasOne
+    public function stores(): HasMany
     {
-        return $this->hasOne(Store::class, 'merchant_id');
+        return $this->hasMany(Store::class, 'merchant_id');
     }
 }
