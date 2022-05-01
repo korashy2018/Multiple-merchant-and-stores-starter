@@ -69,6 +69,7 @@ Route::group(['prefix' => 'v1/{lang}'], function () {
                     'DataController@listStoreProducts'
                 );
             });
+            Route::post('orders', 'OrdersController@store');
         });
     });
 });
