@@ -33,7 +33,7 @@ Route::group(['prefix' => 'v1/{lang}'], function () {
             'middleware' => 'auth:merchants',
             'namespace'  => '\App\Http\Controllers\API\Merchants'
         ], function () {
-            Route::apiResource('stores', 'StoreController')->except('destroy');
+            Route::apiResource('stores', 'StoresController')->except('destroy');
             Route::get('{store}/products', 'ProductsController@index');
             Route::get('products/{product}', 'ProductsController@show');
             Route::post('{store}/products', 'ProductsController@store');

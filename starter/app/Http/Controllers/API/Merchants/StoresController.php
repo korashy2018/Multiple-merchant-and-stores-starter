@@ -9,7 +9,7 @@ use App\Http\Resources\StoreResourceCollection;
 use App\Models\Store;
 use Illuminate\Support\Facades\Log;
 
-class StoreController extends Controller
+class StoresController extends Controller
 {
     private $merchant;
 
