@@ -18,8 +18,8 @@ class CreateStoreSettingsTable extends Migration
             $table->foreignId('store_id')->references('id')
                 ->on('stores')->onDelete('cascade');
             $table->boolean('vat_included')->default(true);
-            $table->integer('vat_percentage')->nullable();
-            $table->integer('shipping_cost')->nullable();
+            $table->float('vat_percentage')->nullable();
+            $table->float('shipping_cost')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
