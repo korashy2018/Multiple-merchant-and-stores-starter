@@ -40,7 +40,7 @@ class Product extends Model
 
     public function getPriceAttribute($value)
     {
-        return $value / 1000;
+        return round($value / 1000, 2);
     }
 
 }

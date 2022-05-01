@@ -54,9 +54,20 @@ Route::group(['prefix' => 'v1/{lang}'], function () {
             Route::post('refresh', 'AuthController@refresh');
             Route::post('me', 'AuthController@me');
         });
-        Route::group(['middleware' => 'auth:customers'], function () {
-            Route::get('test', function () {
-                return 'it worked';
+        Route::group([
+            'middleware' => 'auth:customers',
+            'namespace'  => '\App\Http\Controllers\API\Customers'
+        ], function () {
+            Route::group(['prefix' => 'lookups'], function () {
+                Route::get('merchants', 'DataController@listMerchants');
+                Route::get(
+                    'merchants/{merchant}/stores',
+                    'DataController@listStores'
+                );
+                Route::get(
+                    'stores/{store}/products',
+                    'DataController@listStoreProducts'
+                );
             });
         });
     });

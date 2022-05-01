@@ -19,7 +19,14 @@ class ProductResource extends JsonResource
             'id'          => $this->id,
             'name'        => $this->name,
             'description' => $this->description,
-            'price'       => $this->price
+            'price'       => $this->store->storeSetting->vat_included
+                ? $this->price
+                : round(
+                    (($this->store->storeSetting->vat_percentage / 100)
+                        * $this->price) + $this->price,
+                    2
+                )
         ];
     }
+
 }
