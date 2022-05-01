@@ -23,6 +23,11 @@ class StoreSetting extends Model
             'shipping_cost'
         ];
 
+    protected $casts
+        = [
+            'vat_included' => 'boolean',
+        ];
+
     public function store()
     {
         return $this->belongsTo(Store::class, 'store_id');
