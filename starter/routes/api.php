@@ -29,12 +29,13 @@ Route::group(['prefix' => 'v1/{lang}'], function () {
             Route::post('refresh', 'AuthController@refresh');
             Route::post('me', 'AuthController@me');
         });
-        Route::group(['middleware' => 'auth:merchants'], function () {
-            Route::get('test', function () {
-                return response()->json([
-                    'message' => 'It worked '
-                ]);
-            });
+        Route::group([
+            'middleware' => 'auth:merchants',
+            'namespace'  => '\App\Http\Controllers\API\Merchants'
+        ], function () {
+            Route::apiResource('stores', 'StoreController')->except('destroy');
+            Route::get('{store}/products', 'ProductsController@index');
+            Route::post('{store}/products', 'ProductsController@store');
         });
     });
     //customers routes
